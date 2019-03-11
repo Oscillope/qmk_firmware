@@ -112,6 +112,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       case CC_CBR:
         SEND_STRING("{}"SS_TAP(X_LEFT));
         return false;
+      default:
+        return true;
     }
   }
   return true;
