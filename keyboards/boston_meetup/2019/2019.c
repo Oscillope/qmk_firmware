@@ -53,13 +53,17 @@ volatile uint8_t  led_scrolllock = false;
 
 static uint8_t layer;
 static bool queue_for_send = false;
+static bool screen_is_off = false;
 static uint8_t encoder_value = 32;
 
 __attribute__ ((weak))
 void draw_ui(void) {
   clear_buffer();
   last_flush = timer_read();
-  send_command(DISPLAYON);
+  if (screen_is_off) {
+    send_command(DISPLAYON);
+    screen_is_off = false;
+  }
 
 /* Layer indicator is 61 x 10 pixels */
 #define LAYER_INDICATOR_X 0
@@ -341,8 +345,9 @@ void matrix_scan_kb(void) {
     queue_for_send = false;
   }
 #ifdef QWIIC_MICRO_OLED_ENABLE
-  if (timer_elapsed(last_flush) > ScreenOffInterval) {
+  if (!screen_is_off && (timer_elapsed(last_flush) > ScreenOffInterval)) {
     send_command(DISPLAYOFF);      /* 0xAE */
+    screen_is_off = true;
   }
 #endif
 }
