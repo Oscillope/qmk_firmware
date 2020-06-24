@@ -39,7 +39,7 @@
 
 #define AUDIO_CLICKY
   /* to enable clicky on startup */
-  //#define AUDIO_CLICKY_ON
+#define AUDIO_CLICKY_ON
 #define AUDIO_CLICKY_FREQ_RANDOMNESS 1.5f
 #endif
 
@@ -162,10 +162,13 @@
 #define RGBLIGHT_EFFECT_ALTERNATING
 #define RGBLIGHT_EFFECT_TWINKLE
 
-#define RGBLED_NUM 10
+#define RGBLED_NUM 6
 #define RGB_DI_PIN B5
 #define RGB_MATRIX_LED_COUNT RGBLED_NUM
 
-#define RGB_MATRIX_KEYPRESSES
-
 #define SOLENOID_PIN A14
+
+#define DRV_GREETING 82
+#define DRV_MODE_DEFAULT 8
+
+#define TAPPING_TERM 200
