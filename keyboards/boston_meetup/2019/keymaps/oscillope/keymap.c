@@ -42,19 +42,21 @@ enum td_actions {
 };
 
 void td_wm_mv_finished(qk_tap_dance_state_t *state, void *user_data) {
-  register_code(KC_LGUI);
+  uint8_t mods = MOD_BIT(KC_LGUI);
   if (state->count == 1) {
-    register_code(KC_LSHIFT);
+    mods |= MOD_BIT(KC_LSHIFT);
   }
+  register_mods(mods);
   register_code((state->keycode & 0xff) + 30);
 }
 
 void td_wm_mv_reset(qk_tap_dance_state_t *state, void *user_data) {
+  uint8_t mods = MOD_BIT(KC_LGUI);
   unregister_code((state->keycode & 0xff) + 30);
   if (state->count == 1) {
-    unregister_code(KC_LSHIFT);
+    mods |= MOD_BIT(KC_LSHIFT);
   }
-  unregister_code(KC_LGUI);
+  unregister_mods(mods);
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
@@ -127,7 +129,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------|
  * |      |RGB H+|RGB S+|RGB V+| 
  * |------+------+------+------|
- * |  `   |RGB H-|RGB S-|RGB V-|
+ * |      |RGB H-|RGB S-|RGB V-|
  * `---------------------------'
  */
 [_RAISE] = LAYOUT(
