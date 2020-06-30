@@ -39,6 +39,10 @@ enum td_actions {
   WMMV7,
   WMMV8,
   WMMV9,
+  LS_BASE,
+  LS_LOWER,
+  LS_RAISE,
+  LS_ADJUST,
 };
 
 void td_wm_mv_finished(qk_tap_dance_state_t *state, void *user_data) {
@@ -59,6 +63,18 @@ void td_wm_mv_reset(qk_tap_dance_state_t *state, void *user_data) {
   unregister_mods(mods);
 }
 
+void td_layer_switch(qk_tap_dance_state_t *state, void *user_data) {
+  uint8_t layer = state->keycode - LS_BASE;
+  if (state->count == 1) {
+    layer = (layer + 1) % 4;
+  } else if (layer > _BASE) {
+    layer--;
+  } else {
+    layer = _ADJUST;
+  }
+  layer_move(layer);
+}
+
 qk_tap_dance_action_t tap_dance_actions[] = {
   [WMMV1] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_wm_mv_finished, td_wm_mv_reset),
   [WMMV2] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_wm_mv_finished, td_wm_mv_reset),
@@ -69,10 +85,14 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [WMMV7] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_wm_mv_finished, td_wm_mv_reset),
   [WMMV8] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_wm_mv_finished, td_wm_mv_reset),
   [WMMV9] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_wm_mv_finished, td_wm_mv_reset),
+  [LS_BASE] = ACTION_TAP_DANCE_FN(td_layer_switch),
+  [LS_LOWER] = ACTION_TAP_DANCE_FN(td_layer_switch),
+  [LS_RAISE] = ACTION_TAP_DANCE_FN(td_layer_switch),
+  [LS_ADJUST] = ACTION_TAP_DANCE_FN(td_layer_switch),
 };
 
-const rgblight_segment_t PROGMEM tmux_led_layer[] = RGBLIGHT_LAYER_SEGMENTS( {2, 2, HSV_ORANGE} );
-const rgblight_segment_t PROGMEM num_led_layer[] = RGBLIGHT_LAYER_SEGMENTS( {2, 2, HSV_PURPLE} );
+const rgblight_segment_t PROGMEM tmux_led_layer[] = RGBLIGHT_LAYER_SEGMENTS( {2, 2, HSV_GREEN} );
+const rgblight_segment_t PROGMEM num_led_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 6, HSV_PURPLE} );
 const rgblight_segment_t PROGMEM util_led_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 6, HSV_RED} );
 const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
   tmux_led_layer,
@@ -98,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `---------------------------'
  */
 [_BASE] = LAYOUT(
-  TO(_LOWER),
+  TD(LS_BASE),
   LGUI(KC_J), TD(WMMV7), TD(WMMV8), TD(WMMV9),
   KC_LCTL, TD(WMMV4), TD(WMMV5), TD(WMMV6),
   KC_LALT, TD(WMMV1), TD(WMMV2), TD(WMMV3)
@@ -116,7 +136,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `---------------------------'
  */
 [_LOWER] = LAYOUT(
-  TO(_RAISE),
+  TD(LS_LOWER),
   TM_NXT , TM_HS  , TM_VS  , TM_CP,
   TM_Q   , TM_4   , TM_5   , TM_6 ,
   TM_0   , TM_1   , TM_2   , TM_3
@@ -134,7 +154,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `---------------------------'
  */
 [_RAISE] = LAYOUT(
-  TO(_ADJUST),
+  TD(LS_RAISE),
   RGB_TOG, RGB_MOD, RGB_RMOD, XXXXXXX,
   _______, RGB_HUI, RGB_SAI,  RGB_VAI,
   _______, RGB_HUD, RGB_SAD,  RGB_VAD
@@ -153,7 +173,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `---------------------------'
  */
 [_ADJUST] = LAYOUT(
-  TO(_BASE),
+  TD(LS_ADJUST),
   HPT_TOG, HPT_FBK,  HPT_RST, KC_BSPC,
   _______, HPT_MODI, XXXXXXX, XXXXXXX,
   RESET,   HPT_MODD, CK_TOGG, KC_DEL
