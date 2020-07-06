@@ -15,13 +15,13 @@ enum custom_layers {
 
 enum custom_keycodes {
   BASE = SAFE_RANGE,
-  TM_0,
   TM_1,
   TM_2,
   TM_3,
   TM_4,
   TM_5,
   TM_6,
+  TM_SNXT,
   TM_NXT,
   TM_Q,
   TM_VS,
@@ -132,14 +132,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------|
  * | C-b q|   4  |   5  |   6  |
  * |------+------+------+------|
- * |   0  |   1  |   2  |   3  |
+ * | C-b )|   1  |   2  |   3  |
  * `---------------------------'
  */
 [_LOWER] = LAYOUT(
   TD(LS_LOWER),
   TM_NXT , TM_HS  , TM_VS  , TM_CP,
   TM_Q   , TM_4   , TM_5   , TM_6 ,
-  TM_0   , TM_1   , TM_2   , TM_3
+  TM_SNXT, TM_1   , TM_2   , TM_3
 ),
 
 /* Raise
@@ -208,7 +208,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case TM_0:
     case TM_1:
     case TM_2:
     case TM_3:
@@ -216,9 +215,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case TM_5:
     case TM_6:
       if (record->event.pressed) {
-        const char num[2] = {(keycode - TM_0) + '0', '\0'};
+        const char num[2] = {(keycode - TM_1) + '1', '\0'};
         SEND_STRING(SS_LCTL("b"));
         send_string(num);
+      }
+      break;
+    case TM_SNXT:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LCTL("b") ")");
       }
       break;
     case TM_NXT:
