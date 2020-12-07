@@ -21,7 +21,7 @@ enum custom_keycodes {
   TM_4,
   TM_5,
   TM_6,
-  TM_SNXT,
+  TM_W,
   TM_NXT,
   TM_Q,
   TM_VS,
@@ -47,17 +47,22 @@ enum td_actions {
 
 void td_wm_mv_finished(qk_tap_dance_state_t *state, void *user_data) {
   uint8_t mods = MOD_BIT(KC_LGUI);
-  if (state->count == 1) {
+  if (state->count > 1) {
     mods |= MOD_BIT(KC_LSHIFT);
   }
   register_mods(mods);
   register_code((state->keycode & 0xff) + 30);
+  if (state->count > 2) {
+    unregister_code((state->keycode & 0xff) + 30);
+    unregister_mods(MOD_BIT(KC_LSHIFT));
+    register_code((state->keycode & 0xff) + 30);
+  }
 }
 
 void td_wm_mv_reset(qk_tap_dance_state_t *state, void *user_data) {
   uint8_t mods = MOD_BIT(KC_LGUI);
   unregister_code((state->keycode & 0xff) + 30);
-  if (state->count == 1) {
+  if (state->count == 2) {
     mods |= MOD_BIT(KC_LSHIFT);
   }
   unregister_mods(mods);
@@ -139,7 +144,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   TD(LS_LOWER),
   TM_NXT , TM_HS  , TM_VS  , TM_CP,
   TM_Q   , TM_4   , TM_5   , TM_6 ,
-  TM_SNXT, TM_1   , TM_2   , TM_3
+  TM_W   , TM_1   , TM_2   , TM_3
 ),
 
 /* Raise
@@ -220,11 +225,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         send_string(num);
       }
       break;
-    case TM_SNXT:
+    case TM_W:
       if (record->event.pressed) {
-        SEND_STRING(SS_LCTL("b") ")");
+        SEND_STRING(SS_LCTL("b") "w");
+        layer_on(_NUM);
+      } else {
+        layer_off(_NUM);
       }
-      break;
+      return false;
     case TM_NXT:
       if (record->event.pressed) {
         SEND_STRING(SS_LCTL("b") "n");
