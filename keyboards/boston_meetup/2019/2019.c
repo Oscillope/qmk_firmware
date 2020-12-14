@@ -88,6 +88,10 @@ void draw_ui(void) {
       draw_string(LAYER_INDICATOR_X + 34, LAYER_INDICATOR_Y + 2, "UTIL", PIXEL_ON, XOR, 0);
       break;
     case 4:
+      draw_rect_filled_soft(LAYER_INDICATOR_X + 32, LAYER_INDICATOR_Y + 1, 27, 9, PIXEL_ON, NORM);
+      draw_string(LAYER_INDICATOR_X + 34, LAYER_INDICATOR_Y + 2, "GAME", PIXEL_ON, XOR, 0);
+      break;
+    case 5:
       draw_rect_filled_soft(LAYER_INDICATOR_X + 32, LAYER_INDICATOR_Y + 1, 21, 9, PIXEL_ON, NORM);
       draw_string(LAYER_INDICATOR_X + 34, LAYER_INDICATOR_Y + 2, "NUM", PIXEL_ON, XOR, 0);
       break;

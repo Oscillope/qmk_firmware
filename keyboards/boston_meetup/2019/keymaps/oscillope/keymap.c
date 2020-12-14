@@ -10,6 +10,7 @@ enum custom_layers {
   _LOWER,
   _RAISE,
   _ADJUST,
+  _GAME,
   _NUM
 };
 
@@ -43,6 +44,9 @@ enum td_actions {
   LS_LOWER,
   LS_RAISE,
   LS_ADJUST,
+  LS_GAME,
+  NUM4_5,
+  C_V,
 };
 
 void td_wm_mv_finished(qk_tap_dance_state_t *state, void *user_data) {
@@ -71,11 +75,11 @@ void td_wm_mv_reset(qk_tap_dance_state_t *state, void *user_data) {
 void td_layer_switch(qk_tap_dance_state_t *state, void *user_data) {
   uint8_t layer = state->keycode - LS_BASE;
   if (state->count == 1) {
-    layer = (layer + 1) % 4;
+    layer = (layer + 1) % 5;
   } else if (layer > _BASE) {
     layer--;
   } else {
-    layer = _ADJUST;
+    layer = _GAME;
   }
   layer_move(layer);
 }
@@ -94,15 +98,20 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [LS_LOWER] = ACTION_TAP_DANCE_FN(td_layer_switch),
   [LS_RAISE] = ACTION_TAP_DANCE_FN(td_layer_switch),
   [LS_ADJUST] = ACTION_TAP_DANCE_FN(td_layer_switch),
+  [LS_GAME] = ACTION_TAP_DANCE_FN(td_layer_switch),
+  [NUM4_5] = ACTION_TAP_DANCE_DOUBLE(KC_4, KC_5),
+  [C_V] = ACTION_TAP_DANCE_DOUBLE(KC_C, KC_V)
 };
 
 const rgblight_segment_t PROGMEM tmux_led_layer[] = RGBLIGHT_LAYER_SEGMENTS( {2, 2, HSV_GREEN} );
 const rgblight_segment_t PROGMEM num_led_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 6, HSV_PURPLE} );
 const rgblight_segment_t PROGMEM util_led_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 6, HSV_RED} );
+const rgblight_segment_t PROGMEM game_led_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 6, HSV_TURQUOISE} );
 const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
   tmux_led_layer,
   num_led_layer,
-  util_led_layer
+  util_led_layer,
+  game_led_layer
 );
 
 void keyboard_post_init_user(void) {
@@ -184,6 +193,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   RESET,   HPT_MODD, CK_TOGG, KC_DEL
 ),
 
+/* Game
+ * ,------.
+ * | Next | 
+ * |------+------+-------------.
+ * |  1   |  2   |  3   | 4/5  |
+ * |------+------+------+------|
+ * | C/V  |  W   |  E   |F/Ctrl|
+ * |------+------+------+------|
+ * |  A   |  S   |  D   |Space |
+ * `---------------------------'
+ */
+[_GAME] = LAYOUT(
+  TD(LS_GAME),
+  KC_1   , KC_2    , KC_3   , TD(NUM4_5),
+  TD(C_V), KC_W    , KC_E   , MT(MOD_LCTL, KC_F),
+  KC_A   , KC_S    , KC_D   , KC_SPC
+),
+
 /* Num - Numpad
  * ,------.
  * | Esc  |
@@ -208,6 +235,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   rgblight_set_layer_state(0, layer_state_cmp(state, _LOWER));
   rgblight_set_layer_state(1, layer_state_cmp(state, _NUM));
   rgblight_set_layer_state(2, layer_state_cmp(state, _ADJUST));
+  rgblight_set_layer_state(3, layer_state_cmp(state, _GAME));
   return state;
 }
 
