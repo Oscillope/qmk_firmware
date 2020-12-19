@@ -47,6 +47,7 @@ enum td_actions {
   LS_GAME,
   NUM4_5,
   C_V,
+  E_X,
 };
 
 void td_wm_mv_finished(qk_tap_dance_state_t *state, void *user_data) {
@@ -100,7 +101,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [LS_ADJUST] = ACTION_TAP_DANCE_FN(td_layer_switch),
   [LS_GAME] = ACTION_TAP_DANCE_FN(td_layer_switch),
   [NUM4_5] = ACTION_TAP_DANCE_DOUBLE(KC_4, KC_5),
-  [C_V] = ACTION_TAP_DANCE_DOUBLE(KC_C, KC_V)
+  [C_V] = ACTION_TAP_DANCE_DOUBLE(KC_C, KC_V),
+  [E_X] = ACTION_TAP_DANCE_DOUBLE(KC_E, KC_X)
 };
 
 const rgblight_segment_t PROGMEM tmux_led_layer[] = RGBLIGHT_LAYER_SEGMENTS( {2, 2, HSV_GREEN} );
@@ -199,7 +201,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+-------------.
  * |  1   |  2   |  3   | 4/5  |
  * |------+------+------+------|
- * | C/V  |  W   |  E   |F/Ctrl|
+ * | C/V  |  W   | E/X  |F/Ctrl|
  * |------+------+------+------|
  * |  A   |  S   |  D   |Space |
  * `---------------------------'
@@ -207,7 +209,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_GAME] = LAYOUT(
   TD(LS_GAME),
   KC_1   , KC_2    , KC_3   , TD(NUM4_5),
-  TD(C_V), KC_W    , KC_E   , MT(MOD_LCTL, KC_F),
+  TD(C_V), KC_W    , TD(E_X), MT(MOD_LCTL, KC_F),
   KC_A   , KC_S    , KC_D   , KC_SPC
 ),
 
