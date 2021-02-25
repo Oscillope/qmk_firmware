@@ -16,7 +16,6 @@ ifneq ($(findstring MKL26Z64, $(MCU)),)
   # Linker script to use
   # - it should exist either in <chibios>/os/common/ports/ARMCMx/compilers/GCC/ld/
   #   or <keyboard_dir>/ld/
-  # - NOTE: a custom ld script is needed for EEPROM on Teensy LC
   MCU_LDSCRIPT ?= MKL26Z64
 
   # Startup code to use
@@ -335,9 +334,6 @@ ifneq (,$(filter $(MCU),atmega32a))
   #     calculate timings. Do NOT tack on a 'UL' at the end, this will be done
   #     automatically to create a 32-bit value in your source code.
   F_CPU ?= 12000000
-
-  # unsupported features for now
-  NO_SUSPEND_POWER_DOWN ?= yes
 endif
 
 ifneq (,$(filter $(MCU),atmega328p))
@@ -352,9 +348,6 @@ ifneq (,$(filter $(MCU),atmega328p))
   #     calculate timings. Do NOT tack on a 'UL' at the end, this will be done
   #     automatically to create a 32-bit value in your source code.
   F_CPU ?= 16000000
-
-  # unsupported features for now
-  NO_SUSPEND_POWER_DOWN ?= yes
 endif
 
 ifneq (,$(filter $(MCU),atmega328))
@@ -369,10 +362,6 @@ ifneq (,$(filter $(MCU),atmega328))
   #     calculate timings. Do NOT tack on a 'UL' at the end, this will be done
   #     automatically to create a 32-bit value in your source code.
   F_CPU ?= 16000000
-
-  # unsupported features for now
-  NO_UART ?= yes
-  NO_SUSPEND_POWER_DOWN ?= yes
 endif
 
 ifneq (,$(filter $(MCU),attiny85))
@@ -384,7 +373,4 @@ ifneq (,$(filter $(MCU),attiny85))
   #     calculate timings. Do NOT tack on a 'UL' at the end, this will be done
   #     automatically to create a 32-bit value in your source code.
   F_CPU ?= 16500000
-
-  # unsupported features for now
-  NO_SUSPEND_POWER_DOWN ?= yes
 endif
