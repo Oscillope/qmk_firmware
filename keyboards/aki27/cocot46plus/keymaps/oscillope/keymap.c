@@ -192,7 +192,41 @@ void matrix_scan_user(void) {
 
 }
 
+const rgblight_segment_t PROGMEM capslock_led_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 1, HSV_RED}
+);
+const rgblight_segment_t PROGMEM lower_led_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 2, HSV_GOLD}
+);
+const rgblight_segment_t PROGMEM raise_led_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 2, HSV_PURPLE}
+);
+const rgblight_segment_t PROGMEM mouse_led_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 2, HSV_TEAL}
+);
+const rgblight_segment_t PROGMEM nav_led_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 2, HSV_CYAN}
+);
+
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+    lower_led_layer,
+    raise_led_layer,
+    mouse_led_layer,
+    nav_led_layer,
+    capslock_led_layer
+);
+
+void keyboard_post_init_user(void) {
+    rgblight_layers = my_rgb_layers;
+}
+
+bool led_update_user(led_t led_state) {
+    rgblight_set_layer_state(4, led_state.caps_lock);
+    return true;
+}
+
 layer_state_t layer_state_set_user(layer_state_t state) {
+    //rgblight
     switch (get_highest_layer(state)) {
     case _LOWER:
         rgblight_sethsv_range(HSV_MAGENTA, 0, 2);
