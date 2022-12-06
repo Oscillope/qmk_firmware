@@ -1,3 +1,4 @@
 SUBPROJECT_rev1 = no
 COMMAND_ENABLE = no
 MOUSEKEY_ENABLE = no
+DEBOUNCE_TYPE=sym_eager_pk

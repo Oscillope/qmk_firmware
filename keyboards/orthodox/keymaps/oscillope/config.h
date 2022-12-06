@@ -31,11 +31,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* Select hand configuration */
 
-// #define MASTER_LEFT
+#define MASTER_LEFT
 // #define MASTER_RIGHT
 // #define EE_HANDS
 
-#define TAPPING_TERM 200
-#define TAPPING_TOGGLE 3
+#ifdef DEBOUNCE
+#undef DEBOUNCE
+#define DEBOUNCE 16
+#endif
+
+#define MATRIX_IO_DELAY 800
 
 #endif
