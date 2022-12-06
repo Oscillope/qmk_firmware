@@ -40,8 +40,7 @@ enum custom_keycodes {
 #define MO_RS   MO(_RAISE)
 #define MO_LO   MO(_LOWER)
 #define MO_TB   MO(_TRACKBALL)
-#define SCRL_TB LT(_TRACKBALL, SCRL_TO)
-#define DEL_ALT ALT_T(KC_DEL)
+#define GRV_ALT ALT_T(KC_GRV)
 #define BS_RS   LT(_RAISE, KC_BSPC)
 #define SPC_NAV LT(_NAV, KC_SPC)
 
@@ -62,9 +61,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
        KC_TAB,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                          KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN,  KC_ENT,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-       KC_GRV,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                          KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_QUOT,
+       GRV_ALT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                          KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_QUOT,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-                        SCRL_TB, KC_LCTL, KC_LSFT,   BS_RS,   KC_MS_BTN1,             KC_MS_BTN2, SPC_NAV, KC_LGUI,   MO_LO,  KC_LALT,
+                         KC_LGUI, KC_LCTL, KC_LSFT,   BS_RS,   KC_MS_BTN1,             KC_MS_BTN2, SPC_NAV, KC_RGUI,   MO_LO,   MO_TB,
                                                                  KC_WH_U, KC_MS_BTN3,    KC_WH_D, XXXXXXX, XXXXXXX, XXXXXXX
                                                             //`--------------'  `--------------'
     ),
@@ -72,11 +71,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
         KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                                         KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-       KC_INS, XXXXXXX, KC_PSCR,  CC_PRN,  CC_BRC,  CC_CBR,                                       KC_LCBR, KC_RCBR, KC_LBRC, KC_RBRC, KC_COLN, KC_DQUO,
+       KC_INS, XXXXXXX, KC_PSCR,  CC_PRN,  CC_BRC,  CC_CBR,                                       _______, _______, _______, _______, _______, _______,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-      _______, _______, _______, _______, _______, KC_MSTP,                                       KC_MPLY, KC_PLUS, KC_LABK, KC_RABK, KC_QUES, KC_UNDS,
+      _______, _______, _______, _______, _______, KC_MSTP,                                       KC_MPLY, _______, _______, _______, _______, _______,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-                        _______, _______,   TT(3), _______,      KC_MPRV,                KC_MNXT, _______, _______, _______, _______,
+                        _______, _______,   TG(3),   TG(2),      KC_MPRV,                KC_MNXT, _______, _______, _______, _______,
                                                                  KC_VOLD,    KC_MUTE,    KC_VOLU, XXXXXXX, XXXXXXX, XXXXXXX
                                                             //`--------------'  `--------------'
     ),
@@ -88,13 +87,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
       CC_ARRW, KC_EXLM,   KC_AT,  KC_HASH, KC_LCBR, KC_RCBR,                                          KC_1,    KC_2,    KC_3, _______, KC_BSLS, KC_PIPE,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-                        _______,  _______, _______, _______,   KC_MS_BTN4,             KC_MS_BTN5,    KC_0, _______,   TT(3), _______,
+                        _______,  _______,   TG(3), _______,   KC_MS_BTN4,             KC_MS_BTN5,    KC_0, _______, _______, _______,
                                                                   KC_WH_L, KC_MS_BTN3,    KC_WH_R, XXXXXXX, XXXXXXX, XXXXXXX
                                                             //`--------------'  `--------------'
     ),
   [_TRACKBALL] = LAYOUT(
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-    TO(_BASE), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, RGB_TOG,                                       SCRL_TO,  CPI_SW, SCRL_SW, ROT_L15, ROT_R15, XXXXXXX,
+    TO(_BASE), XXXXXXX, XXXXXXX, XXXXXXX, VK_TOGG, RGB_TOG,                                       SCRL_TO,  CPI_SW, SCRL_SW, ROT_L15, ROT_R15, XXXXXXX,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
       XXXXXXX, XXXXXXX, RGB_VAI, RGB_SAI, RGB_HUI, RGB_MOD,                                       SCRL_MO, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
@@ -112,8 +111,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-                        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,   XXXXXXX,             XXXXXXX, _______, XXXXXXX, XXXXXXX,  XXXXXXX,
-                                                                 XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+                        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,   _______,             _______, _______, XXXXXXX, XXXXXXX,  XXXXXXX,
+                                                                 KC_PGUP, XXXXXXX,  KC_PGDN, XXXXXXX, XXXXXXX, XXXXXXX
                                                             //`--------------'  `--------------'
     ),
   [_Layer5] = LAYOUT(
@@ -225,36 +224,81 @@ bool led_update_user(led_t led_state) {
     return true;
 }
 
+#define LAYER_COND(n, l)      rgblight_set_layer_state(n, layer_state_cmp(state, l))
 layer_state_t layer_state_set_user(layer_state_t state) {
-    //rgblight
+    LAYER_COND(0, _LOWER);
+    LAYER_COND(1, _RAISE);
+    LAYER_COND(2, _TRACKBALL);
+    LAYER_COND(3, _NAV);
     switch (get_highest_layer(state)) {
     case _LOWER:
-        rgblight_sethsv_range(HSV_MAGENTA, 0, 2);
-        break;
     case _RAISE:
-        rgblight_sethsv_range(HSV_BLUE, 0, 2);
         break;
     case _TRACKBALL:
-        rgblight_sethsv_range(HSV_PURPLE, 0, 2);
-        break;
     case _NAV:
-        rgblight_sethsv_range(HSV_CYAN, 0, 2);
-        break;
-    case _Layer5:
-        rgblight_sethsv_range(HSV_YELLOW, 0, 2);
+        cocot_set_scroll_mode(true);
         break;
     default:
-        rgblight_sethsv_range( 0, 0, 0, 0, 2);
+        cocot_set_scroll_mode(false);
         break;
     }
-    rgblight_set_effect_range( 2, 10);
-      return state;
+    //rgblight_set_effect_range( 2, 10);
+    return state;
 };
 
-
 #ifdef OLED_ENABLE
+
+#define ANIM_STR_MULTI(a)       case RGBLIGHT_MODE_##a ... RGBLIGHT_MODE_##a##_end: *mode = *mode - RGBLIGHT_MODE_##a; return PSTR(#a);
+#define ANIM_STR(a)             case RGBLIGHT_MODE_##a: *mode = *mode - RGBLIGHT_MODE_##a; return PSTR(#a);
+const char* PROGMEM get_anim_str(uint8_t* mode)
+{
+    switch (*mode) {
+#ifdef RGBLIGHT_EFFECT_TWINKLE
+    ANIM_STR_MULTI(TWINKLE)
+#endif
+#ifdef RGBLIGHT_EFFECT_ALTERNATING
+    ANIM_STR(ALTERNATING)
+#endif
+#ifdef RGBLIGHT_EFFECT_RGB_TEST
+    ANIM_STR(RGB_TEST)
+#endif
+#ifdef RGBLIGHT_EFFECT_STATIC_GRADIENT
+    ANIM_STR_MULTI(STATIC_GRADIENT)
+#endif
+#ifdef RGBLIGHT_EFFECT_CHRISTMAS
+    ANIM_STR(CHRISTMAS)
+#endif
+#ifdef RGBLIGHT_EFFECT_KNIGHT
+    ANIM_STR_MULTI(KNIGHT)
+#endif
+#ifdef RGBLIGHT_EFFECT_SNAKE
+    ANIM_STR_MULTI(SNAKE)
+#endif
+#ifdef RGBLIGHT_EFFECT_RAINBOW_SWIRL
+    ANIM_STR_MULTI(RAINBOW_SWIRL)
+#endif
+#ifdef RGBLIGHT_EFFECT_RAINBOW_MOOD
+    ANIM_STR_MULTI(RAINBOW_MOOD)
+#endif
+#ifdef RGBLIGHT_EFFECT_BREATHING
+    ANIM_STR_MULTI(BREATHING)
+#endif
+    ANIM_STR(STATIC_LIGHT)
+    default: return "???";
+    }
+}
+
 bool oled_task_user(void) {
-    render_logo();
+    if (IS_LAYER_ON(_TRACKBALL)) {
+        oled_write_P(PSTR("\nMode:\n"), false);
+        uint8_t mode = rgblight_get_mode();
+        oled_write_P(get_anim_str(&mode), false);
+        char modebuf[5];
+        snprintf(modebuf, 5, " %2d\n", mode);
+        oled_write(modebuf, false);
+    } else {
+        render_logo();
+    }
     oled_write_layer_state();
     return false;
 }
