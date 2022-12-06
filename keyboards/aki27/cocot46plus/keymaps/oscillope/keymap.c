@@ -105,14 +105,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
   [_NAV] = LAYOUT(
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                       KC_HOME, KC_PGDN, KC_PGUP,  KC_END, XXXXXXX, XXXXXXX,
+      _______, _______, _______, _______, _______, _______,                                       KC_HOME, KC_PGDN, KC_PGUP,  KC_END, _______, _______,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                       KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX, XXXXXXX,
+      _______, _______, _______, _______, _______, _______,                                       KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, _______, _______,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      _______, _______, _______, _______, _______, _______,                                       _______, _______, _______, _______, _______, _______,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-                        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,   _______,             _______, _______, XXXXXXX, XXXXXXX,  XXXXXXX,
-                                                                 KC_PGUP, XXXXXXX,  KC_PGDN, XXXXXXX, XXXXXXX, XXXXXXX
+                        _______, _______, _______,  _______,   _______,             _______, _______, _______, _______,  _______,
+                                                                 KC_PGUP, _______,  KC_PGDN, _______, _______, _______
                                                             //`--------------'  `--------------'
     ),
   [_Layer5] = LAYOUT(
