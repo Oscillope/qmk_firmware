@@ -1,0 +1,11 @@
+{
+  "keyboard_name": "cocot46plus",
+  "manufacturer": "aki27",
+  "url": "",
+  "maintainer": "aki27",
+  "usb": {
+    "vid": "0x1727",
+    "pid": "0x0003",
+    "device_version": "1.0.0"
+  }
+}
