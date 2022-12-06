@@ -149,6 +149,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case SPC_NAV:
+            // Space bar should err towards tap behavior
+            return false;
+        default:
+            // We want this behavior for everything except the spacebar
+            return true;
+    }
+}
+
 keyevent_t encoder1_ccw = {
     .key = (keypos_t){.row = 4, .col = 2},
     .pressed = false
