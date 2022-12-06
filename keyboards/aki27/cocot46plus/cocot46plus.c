@@ -265,7 +265,7 @@ void oled_write_layer_state(void) {
             oled_write_P(PSTR("Mouse"), false);
             break;
         case 4:
-            oled_write_P(PSTR("L4   "), false);
+            oled_write_P(PSTR("Nav  "), false);
             break;
         case 5:
             oled_write_P(PSTR("L5   "), false);

@@ -31,7 +31,7 @@ enum layer_number {
 };
 
 enum custom_keycodes {
-    CC_ARRW = SAFE_RANGE,
+    CC_ARRW = COCOT_SAFE_RANGE,
     CC_PRN,
     CC_BRC,
     CC_CBR
@@ -42,7 +42,7 @@ enum custom_keycodes {
 #define MO_TB   MO(_TRACKBALL)
 #define SCRL_TB LT(_TRACKBALL, SCRL_TO)
 #define DEL_ALT ALT_T(KC_DEL)
-#define BS_ALT  ALT_T(KC_BSPC)
+#define BS_RS   LT(_RAISE, KC_BSPC)
 #define SPC_NAV LT(_NAV, KC_SPC)
 
 /*
@@ -64,7 +64,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
        KC_GRV,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                          KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_QUOT,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-                        SCRL_TB, KC_LCTL,   MO_LO,  BS_ALT,   KC_MS_BTN1,             KC_MS_BTN2, SPC_NAV,   MO_RS, KC_LGUI, KC_LALT,
+                        SCRL_TB, KC_LCTL, KC_LSFT,   BS_RS,   KC_MS_BTN1,             KC_MS_BTN2, SPC_NAV, KC_LGUI,   MO_LO,  KC_LALT,
                                                                  KC_WH_U, KC_MS_BTN3,    KC_WH_D, XXXXXXX, XXXXXXX, XXXXXXX
                                                             //`--------------'  `--------------'
     ),
@@ -76,7 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
       _______, _______, _______, _______, _______, KC_MSTP,                                       KC_MPLY, KC_PLUS, KC_LABK, KC_RABK, KC_QUES, KC_UNDS,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-                        _______, _______, _______, _______,      KC_MPRV,                KC_MNXT, _______,   TT(3), _______, _______,
+                        _______, _______,   TT(3), _______,      KC_MPRV,                KC_MNXT, _______, _______, _______, _______,
                                                                  KC_VOLD,    KC_MUTE,    KC_VOLU, XXXXXXX, XXXXXXX, XXXXXXX
                                                             //`--------------'  `--------------'
     ),
@@ -88,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
       CC_ARRW, KC_EXLM,   KC_AT,  KC_HASH, KC_LCBR, KC_RCBR,                                          KC_1,    KC_2,    KC_3, _______, KC_BSLS, KC_PIPE,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-                        _______,  _______,   TT(3), _______,   KC_MS_BTN4,             KC_MS_BTN5,    KC_0, _______, _______, _______,
+                        _______,  _______, _______, _______,   KC_MS_BTN4,             KC_MS_BTN5,    KC_0, _______,   TT(3), _______,
                                                                   KC_WH_L, KC_MS_BTN3,    KC_WH_R, XXXXXXX, XXXXXXX, XXXXXXX
                                                             //`--------------'  `--------------'
     ),
@@ -101,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       XXXXXXX, XXXXXXX, RGB_VAD, RGB_SAD, RGB_HUD,RGB_RMOD,                                       SCRL_IN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
                         _______, _______, _______, _______,   KC_MS_BTN1,             KC_MS_BTN2, _______, _______, _______, _______,
-                                                                 KC_PGUP, KC_MS_BTN3,  KC_PGDOWN, XXXXXXX, XXXXXXX, XXXXXXX
+                                                                 KC_PGUP, KC_MS_BTN3,    KC_PGDN, XXXXXXX, XXXXXXX, XXXXXXX
                                                             //`--------------'  `--------------'
     ),
   [_NAV] = LAYOUT(
@@ -195,32 +195,22 @@ void matrix_scan_user(void) {
 layer_state_t layer_state_set_user(layer_state_t state) {
     switch (get_highest_layer(state)) {
     case _LOWER:
-        rgblight_sethsv_range(HSV_BLUE, 0, 2);
-        cocot_set_scroll_mode(true);
+        rgblight_sethsv_range(HSV_MAGENTA, 0, 2);
         break;
     case _RAISE:
-        rgblight_sethsv_range(HSV_RED, 0, 2);
-        cocot_set_scroll_mode(true);
+        rgblight_sethsv_range(HSV_BLUE, 0, 2);
         break;
     case _TRACKBALL:
-        rgblight_sethsv_range(HSV_GREEN, 0, 2);
-        cocot_set_scroll_mode(false);
+        rgblight_sethsv_range(HSV_PURPLE, 0, 2);
         break;
-    case _Layer4:
-        rgblight_sethsv_range(HSV_YELLOW, 0, 2);
-        cocot_set_scroll_mode(false);
+    case _NAV:
+        rgblight_sethsv_range(HSV_CYAN, 0, 2);
         break;
     case _Layer5:
-        rgblight_sethsv_range(HSV_CYAN, 0, 2);
-        cocot_set_scroll_mode(false);
-        break;
-    case _Layer6:
-        rgblight_sethsv_range(HSV_ORANGE, 0, 2);
-        cocot_set_scroll_mode(false);
+        rgblight_sethsv_range(HSV_YELLOW, 0, 2);
         break;
     default:
         rgblight_sethsv_range( 0, 0, 0, 0, 2);
-        cocot_set_scroll_mode(false);
         break;
     }
     rgblight_set_effect_range( 2, 10);
