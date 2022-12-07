@@ -27,12 +27,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
 #define _QWERTY 0
-#define _LOWER 1
-#define _RAISE 2
-#define _NAV 3
+#define _GAME 1
+#define _LOWER 2
+#define _RAISE 3
+#define _NAV 4
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
+  GAME,
   LOWER,
   RAISE,
   NAV,
@@ -48,8 +50,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_QWERTY] = LAYOUT(
     KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                                                   KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
-    KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,          TT(_RAISE), TT(_LOWER),     TT(_LOWER), TT(_RAISE),      KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
+    KC_TAB,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,          MO(_RAISE), MO(_LOWER),     MO(_LOWER), MO(_RAISE),      KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
     KC_GRV,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_BSPC, KC_LSFT, KC_LCTL,         KC_LALT, KC_LGUI, NAV_TAP,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_QUOT
+  ),
+
+  [_GAME]  = LAYOUT(
+    _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                                                   KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
+    _______, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,             KC_C,    KC_V,             _______, TG(_GAME),        KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
+    KC_Z,    KC_A,    KC_S,    KC_D,    KC_F,    KC_X,    KC_SPC,  _______, _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______
   ),
 
   [_LOWER] = LAYOUT(
@@ -60,16 +68,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_RAISE] = LAYOUT(
     KC_CAPS, KC_AMPR, KC_ASTR, KC_UNDS, KC_LPRN, KC_RPRN,                                                                KC_7,    KC_8,    KC_9,    KC_EQL,  KC_BSPC, _______,
-    _______, KC_DLR,  KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC,          _______, _______,          _______, _______,          KC_4,    KC_5,    KC_6,    KC_MINS, KC_PLUS, _______,
+    _______, KC_DLR,  KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC,          _______, TG(_GAME),        _______, _______,          KC_4,    KC_5,    KC_6,    KC_MINS, KC_PLUS, _______,
     CC_ARRW, KC_EXLM, KC_AT,   KC_HASH, KC_LCBR, KC_RCBR, _______, _______, _______,          _______, _______, KC_0,    KC_1,    KC_2,    KC_3,    KC_DOT,  KC_BSLS, KC_PIPE
   ),
 
-  [_NAV] =  LAYOUT(
+  [_NAV]   = LAYOUT(
     _______, _______, _______, KC_MUTE, KC_VOLD, KC_VOLU,                                                                _______, _______, _______, _______, _______, _______,
     _______, _______, KC_MPRV, KC_MSTP, KC_MPLY, KC_MNXT,          _______, _______,          _______, _______,          KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______
-  )
-
+  ),
 
 };
 
