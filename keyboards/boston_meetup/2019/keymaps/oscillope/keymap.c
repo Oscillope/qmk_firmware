@@ -52,29 +52,32 @@ enum td_actions {
 
 void td_wm_mv_finished(qk_tap_dance_state_t *state, void *user_data) {
   uint8_t mods = MOD_BIT(KC_LGUI);
+  uint16_t keycode = TAP_DANCE_KEYCODE(state);
   if (state->count > 1) {
-    mods |= MOD_BIT(KC_LSHIFT);
+    mods |= MOD_BIT(KC_LSFT);
   }
   register_mods(mods);
-  register_code((state->keycode & 0xff) + 30);
+  register_code((keycode & 0xff) + 30);
   if (state->count > 2) {
-    unregister_code((state->keycode & 0xff) + 30);
-    unregister_mods(MOD_BIT(KC_LSHIFT));
-    register_code((state->keycode & 0xff) + 30);
+    unregister_code((keycode & 0xff) + 30);
+    unregister_mods(MOD_BIT(KC_LSFT));
+    register_code((keycode & 0xff) + 30);
   }
 }
 
 void td_wm_mv_reset(qk_tap_dance_state_t *state, void *user_data) {
   uint8_t mods = MOD_BIT(KC_LGUI);
-  unregister_code((state->keycode & 0xff) + 30);
+  uint16_t keycode = TAP_DANCE_KEYCODE(state);
+  unregister_code((keycode & 0xff) + 30);
   if (state->count == 2) {
-    mods |= MOD_BIT(KC_LSHIFT);
+    mods |= MOD_BIT(KC_LSFT);
   }
   unregister_mods(mods);
 }
 
 void td_layer_switch(qk_tap_dance_state_t *state, void *user_data) {
-  uint8_t layer = state->keycode - LS_BASE;
+  uint16_t keycode = TAP_DANCE_KEYCODE(state);
+  uint8_t layer = keycode - LS_BASE;
   if (state->count == 1) {
     layer = (layer + 1) % 5;
   } else if (layer > _BASE) {
@@ -192,7 +195,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   TD(LS_ADJUST),
   HPT_TOG, HPT_FBK,  HPT_RST, KC_BSPC,
   _______, HPT_MODI, XXXXXXX, XXXXXXX,
-  RESET,   HPT_MODD, CK_TOGG, KC_DEL
+  QK_BOOT, HPT_MODD, CK_TOGG, KC_DEL
 ),
 
 /* Game
@@ -293,11 +296,4 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
   }
   return true;
-}
-
-void matrix_init_user(void) {
-}
-
-
-void matrix_scan_user(void) {
 }
