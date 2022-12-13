@@ -42,7 +42,9 @@ enum custom_keycodes {
 #define MO_TB   MO(_TRACKBALL)
 #define GRV_ALT ALT_T(KC_GRV)
 #define BS_RS   LT(_RAISE, KC_BSPC)
+#define BS_SFT  MT(MOD_LSFT, KC_BSPC)
 #define SPC_NAV LT(_NAV, KC_SPC)
+#define SPC_GUI MT(MOD_RGUI, KC_SPC)
 
 /*
 #define CPI_SW USER00
@@ -63,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
        GRV_ALT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                          KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_QUOT,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-                         KC_LGUI, KC_LCTL, KC_LSFT,   BS_RS,   KC_MS_BTN1,             KC_MS_BTN2, SPC_NAV, KC_RGUI,   MO_LO,   MO_TB,
+                         KC_LGUI, KC_LCTL,  BS_SFT,   BS_RS,   KC_MS_BTN1,             KC_MS_BTN2, SPC_NAV, SPC_GUI,   MO_LO,   MO_TB,
                                                                  KC_WH_U, KC_MS_BTN3,    KC_WH_D, XXXXXXX, XXXXXXX, XXXXXXX
                                                             //`--------------'  `--------------'
     ),
@@ -152,6 +154,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case SPC_NAV:
+        case SPC_GUI:
             // Space bar should err towards tap behavior
             return false;
         default:
