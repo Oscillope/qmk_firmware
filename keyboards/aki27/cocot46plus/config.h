@@ -17,8 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "config_common.h"
-
 /* USB Device descriptor parameter */
 /*
 #define VENDOR_ID    0x1727
@@ -59,7 +57,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TAPPING_TERM 200
 
 /* ws2812 RGB LED */
-#define RGB_DI_PIN B6
+#define WS2812_DI_PIN B6
 
 #ifdef RGBLIGHT_ENABLE
     #undef RGBLED_NUM

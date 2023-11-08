@@ -8,6 +8,7 @@ BOOTLOADER = caterina
 #   change yes to no to disable
 #
 ENCODER_ENABLE = yes
+ENCODER_MAP_ENABLE = yes
 BOOTMAGIC_ENABLE = yes      # Enable Bootmagic Lite
 MOUSEKEY_ENABLE = yes       # Mouse keys
 EXTRAKEY_ENABLE = yes       # Audio control and System control
@@ -27,7 +28,7 @@ POINTING_DEVICE_ENABLE = yes
 POINTING_DEVICE_DRIVER = adns5050
 
 OLED_ENABLE     = yes
-OLED_DRIVER     = SSD1306
+OLED_DRIVER     = ssd1306
 
 # Disable unnecessary functions to reduce firmware size
 SPACE_CADET_ENABLE = no
