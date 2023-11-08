@@ -26,8 +26,7 @@ enum layer_number {
     _LOWER = 1,
     _RAISE = 2,
     _TRACKBALL = 3,
-    _NAV = 4,
-    _Layer5 = 5
+    _NAV = 4
 };
 
 enum custom_keycodes {
@@ -56,6 +55,16 @@ enum custom_keycodes {
 #define SCRL_IN USER06
 */
 
+#if defined(ENCODER_MAP_ENABLE)
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
+    [_BASE] =      { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
+    [_LOWER] =     { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+    [_RAISE] =     { ENCODER_CCW_CW(KC_WH_L, KC_WH_R) },
+    [_TRACKBALL] = { ENCODER_CCW_CW(RGB_HUI, RGB_HUD) },
+    [_NAV] =       { ENCODER_CCW_CW(KC_PGUP, KC_PGDN) },
+};
+#endif
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT(
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
@@ -63,7 +72,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
        KC_TAB,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                          KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN,  KC_ENT,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-       GRV_ALT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                          KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_QUOT,
+       GRV_ALT,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                          KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_QUOT,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
                          KC_LGUI, KC_LCTL,  BS_SFT,   BS_RS,   KC_MS_BTN1,             KC_MS_BTN2, SPC_NAV, SPC_GUI,   MO_LO,   MO_TB,
                                                                  KC_WH_U, KC_MS_BTN3,    KC_WH_D, XXXXXXX, XXXXXXX, XXXXXXX
@@ -73,11 +82,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
         KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                                         KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-       KC_INS, XXXXXXX, KC_PSCR,  CC_PRN,  CC_BRC,  CC_CBR,                                       _______, _______, _______, _______, _______, _______,
+       KC_INS, XXXXXXX, KC_PSCR,  CC_PRN,  CC_BRC,  CC_CBR,                                       KC_HOME, KC_PGDN, KC_PGUP,  KC_END, _______, _______,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
       _______, _______, _______, _______, _______, KC_MSTP,                                       KC_MPLY, _______, _______, _______, _______, _______,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-                        _______, _______,   TG(3),   TG(2),      KC_MPRV,                KC_MNXT, _______, _______, _______, _______,
+                        _______, _______, _______,   TG(2),      KC_MPRV,                KC_MNXT, _______, _______, _______, _______,
                                                                  KC_VOLD,    KC_MUTE,    KC_VOLU, XXXXXXX, XXXXXXX, XXXXXXX
                                                             //`--------------'  `--------------'
     ),
@@ -89,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
       CC_ARRW, KC_EXLM,   KC_AT,  KC_HASH, KC_LCBR, KC_RCBR,                                          KC_1,    KC_2,    KC_3, _______, KC_BSLS, KC_PIPE,
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-                        _______,  _______,   TG(3), _______,   KC_MS_BTN4,             KC_MS_BTN5,    KC_0, _______, _______, _______,
+                        _______,  _______, _______, _______,   KC_MS_BTN4,             KC_MS_BTN5,    KC_0, _______, _______, _______,
                                                                   KC_WH_L, KC_MS_BTN3,    KC_WH_R, XXXXXXX, XXXXXXX, XXXXXXX
                                                             //`--------------'  `--------------'
     ),
@@ -115,18 +124,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------------------------------------------------------|                                   |-------------------------------------------------------|
                         _______, _______, _______,  _______,   _______,             _______, _______, _______, _______,  _______,
                                                                  KC_PGUP, _______,  KC_PGDN, _______, _______, _______
-                                                            //`--------------'  `--------------'
-    ),
-  [_Layer5] = LAYOUT(
-  //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|-------------------------------------------------------|                                   |-------------------------------------------------------|
-                        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,   XXXXXXX,             XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,
-                                                                 XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
                                                             //`--------------'  `--------------'
     )
 };
@@ -161,48 +158,6 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
             // We want this behavior for everything except the spacebar
             return true;
     }
-}
-
-keyevent_t encoder1_ccw = {
-    .key = (keypos_t){.row = 4, .col = 2},
-    .pressed = false
-};
-
-keyevent_t encoder1_cw = {
-    .key = (keypos_t){.row = 4, .col = 5},
-    .pressed = false
-};
-
-bool encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 0) { /* First encoder */
-        if (clockwise) {
-            encoder1_cw.pressed = true;
-            encoder1_cw.time = (timer_read() | 1);
-            action_exec(encoder1_cw);
-        } else {
-            encoder1_ccw.pressed = true;
-            encoder1_ccw.time = (timer_read() | 1);
-            action_exec(encoder1_ccw);
-        }
-    }
-
-    return true;
-}
-
-void matrix_scan_user(void) {
-
-    if (IS_PRESSED(encoder1_ccw)) {
-        encoder1_ccw.pressed = false;
-        encoder1_ccw.time = (timer_read() | 1);
-        action_exec(encoder1_ccw);
-    }
-
-    if (IS_PRESSED(encoder1_cw)) {
-        encoder1_cw.pressed = false;
-        encoder1_cw.time = (timer_read() | 1);
-        action_exec(encoder1_cw);
-    }
-
 }
 
 const rgblight_segment_t PROGMEM capslock_led_layer[] = RGBLIGHT_LAYER_SEGMENTS(
